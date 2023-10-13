@@ -5,9 +5,9 @@ import Slides from './src/components/Slides';
 import { Slide } from './src/models';
 
 const SLIDE_DATA: Slide[] = [
-  { text: 'Welcome to JobApp' },
-  { text: 'Use this to get a job' },
-  { text: 'Set your location, then swipe away' },
+  { text: 'Welcome to JobApp', color: '#03A9F4' },
+  { text: 'Use this to get a job', color: '#009688' },
+  { text: 'Set your location, then swipe away', color: '#03A9F4' },
 ];
 
 export default function App() {

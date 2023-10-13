@@ -16,9 +16,9 @@ const Slides: React.FC<SlidesProps> = ({ data }) => {
       style={styles.view}
       pagingEnabled
     >
-      {data.map(d => (
-        <View key={d.text} style={styles.slide}>
-          <Text style={styles.text}>{d.text}</Text>
+      {data.map(slide => (
+        <View key={slide.text} style={[styles.slide, { backgroundColor: slide.color }]}>
+          <Text style={styles.text}>{slide.text}</Text>
         </View>
       ))}
     </ScrollView>
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
   },
   text: {
+    color: 'white',
     fontSize: 30
   },
   view: {
