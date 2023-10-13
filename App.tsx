@@ -1,12 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import Slides from './src/components/Slides';
+import { Slide } from './src/models';
+
+const SLIDE_DATA: Slide[] = [
+  { text: 'Welcome to JobApp' },
+  { text: 'Use this to get a job' },
+  { text: 'Set your location, then swipe away' },
+];
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <SafeAreaView>
+        <StatusBar style="auto"/>
+        <Slides data={SLIDE_DATA}/>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
