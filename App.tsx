@@ -15,7 +15,10 @@ export default function App() {
     <SafeAreaProvider>
       <SafeAreaView>
         <StatusBar style="auto"/>
-        <Slides data={SLIDE_DATA}/>
+        <Slides
+          data={SLIDE_DATA}
+          onComplete={() => {}}
+        />
       </SafeAreaView>
     </SafeAreaProvider>
   );
