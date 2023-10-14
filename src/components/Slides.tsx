@@ -58,9 +58,9 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
   },
   text: {
-    alignSelf: 'center',
     color: 'white',
-    fontSize: 30
+    fontSize: 30,
+    textAlign: 'center'
   },
   view: {
     height: '100%'
