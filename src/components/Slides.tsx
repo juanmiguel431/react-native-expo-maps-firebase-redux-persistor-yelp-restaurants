@@ -25,6 +25,7 @@ const Slides: React.FC<SlidesProps> = ({ data, onComplete }) => {
               <Button
                 title="Onwards!"
                 raised
+                size="lg"
                 titleStyle={styles.buttonTitle}
                 containerStyle={styles.buttonContainer}
                 style={styles.buttonStyle}
