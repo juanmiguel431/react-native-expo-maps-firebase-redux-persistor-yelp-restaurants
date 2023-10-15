@@ -2,8 +2,6 @@ import Type from '../actions/types';
 import { User } from 'firebase/auth';
 
 type LoginFormReducerState = {
-  email: string;
-  password: string;
   isLoading: boolean;
   error: string;
   user: User | null;
@@ -63,12 +61,12 @@ export const authReducer = (state: LoginFormReducerState = initialState, action:
     case Type.SetLoading:
       return { ...state, isLoading: action.payload };
     case Type.LoginUserFail:
-      return { ...state, isSignedIn: false, password: '', error: action.payload };
+      return { ...state, isSignedIn: false, error: action.payload };
     case Type.LoginUserSuccess:
       return { ...state, ...initialState, isSignedIn: true, user: action.payload };
     case Type.NavigateToSignup:
     case Type.NavigateToSignin:
-      return { ...state, error: '', email: '', password: '' };
+      return { ...state, error: '' };
     case Type.SignOutUser:
       return { ...state, user: null, isSignedIn: false };
     case Type.SetError:
