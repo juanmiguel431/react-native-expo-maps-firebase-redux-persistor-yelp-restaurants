@@ -1,7 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootStackParamList, SCREEN } from './models/screen';
-import { AuthScreen, DeckScreen, MapScreen, ReviewScreen, SettingScreen, WelcomeScreen, ResolveAuthScreen } from './screens';
+import {
+  SigninScreen,
+  DeckScreen,
+  MapScreen,
+  ReviewScreen,
+  SettingScreen,
+  WelcomeScreen,
+  ResolveAuthScreen,
+  SignupScreen
+} from './screens';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View } from 'react-native';
@@ -51,12 +60,12 @@ const MainFlow = () => {
   );
 };
 
-
 const AuthFlow = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name={SCREEN.Welcome} component={WelcomeScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name={SCREEN.Auth} component={AuthScreen}/>
+      <Stack.Screen name={SCREEN.Signin} component={SigninScreen}/>
+      <Stack.Screen name={SCREEN.Signup} component={SignupScreen}/>
     </Stack.Navigator>
   );
 };

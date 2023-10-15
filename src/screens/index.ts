@@ -1,4 +1,5 @@
-export * from './AuthScreen';
+export * from './SigninScreen';
+export * from './SignupScreen';
 export * from './DeckScreen';
 export * from './MapScreen';
 export * from './ReviewScreen';

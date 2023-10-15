@@ -2,7 +2,6 @@ import { NativeStackScreenProps  } from 'react-native-screens/native-stack';
 
 export const enum SCREEN {
   Welcome = 'Welcome',
-  Auth = 'Auth',
   MainFlow = 'MainFlow',
   Map = 'Map',
   Deck = 'Deck',
@@ -19,7 +18,6 @@ export type Screen = ObjectValues<typeof SCREEN>;
 
 export type RootStackParamList = {
   [SCREEN.Welcome]: undefined;
-  [SCREEN.Auth]: undefined;
   [SCREEN.MainFlow]: undefined;
   [SCREEN.Map]: undefined;
   [SCREEN.Deck]: { id: string };
@@ -36,7 +34,6 @@ export type RootStackParamList = {
 export type SigninScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Signin>;
 export type SignupScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Signup>;
 export type WelcomeScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Welcome>;
-export type AuthScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Auth>;
 export type MainFlowScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.MainFlow>;
 export type MapScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Map>;
 export type DeckScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Deck>;

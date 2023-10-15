@@ -16,7 +16,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
       <Slides
         data={SLIDE_DATA}
         onComplete={() => {
-          navigation.navigate(SCREEN.Auth);
+          navigation.navigate(SCREEN.Signin);
         }}
       />
     </SafeAreaView>
