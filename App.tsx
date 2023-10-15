@@ -1,65 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { createStackNavigator } from '@react-navigation/stack';
-import { RootStackParamList, SCREEN } from './src/models/screen';
-import { NavigationContainer } from '@react-navigation/native';
-import { AuthScreen, DeckScreen, MapScreen, ReviewScreen, SettingScreen, WelcomeScreen } from './src/screens';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Button } from '@rneui/themed';
-import { View } from 'react-native';
+import { Provider as StoreProvider } from 'react-redux';
+import { NativeModules, Platform, View } from 'react-native';
+import { useEffect } from 'react';
+import { initializeApp } from 'firebase/app';
+import { initializeAuth, getReactNativePersistence, } from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import AppContainer from './src/AppContainer';
+import store from './src/reducers';
 
-const Stack = createStackNavigator<RootStackParamList>();
-const Tab = createBottomTabNavigator<RootStackParamList>();
+const { UIManager } = NativeModules;
 
-const ReviewFlow = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name={SCREEN.Review}
-        component={ReviewScreen}
-        options={({ navigation }) => ({
-          headerRight: () => (
-            <View style={{ marginRight: 10 }}>
-              <Button
-                title="Setting"
-                size="sm"
-                onPress={() => {
-                  navigation.navigate(SCREEN.Setting);
-                }}
-              />
-            </View>
-          )
-        })}
-      />
-      <Stack.Screen name={SCREEN.Setting} component={SettingScreen}/>
-    </Stack.Navigator>
-  );
-};
-
-const MainFlow = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name={SCREEN.Map} component={MapScreen}/>
-      <Tab.Screen name={SCREEN.Deck} component={DeckScreen}/>
-      <Tab.Screen
-        name={SCREEN.ReviewFlow}
-        component={ReviewFlow}
-        options={{ headerShown: false, title: 'Review Jobs' }}/>
-    </Tab.Navigator>
-  );
-};
+if (Platform.OS === 'android') {
+  UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 export default function App() {
+
+  useEffect(() => {
+    const app = initializeApp({
+      apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+      authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+      projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+      storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+      appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
+      measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID
+    });
+
+    // https://stackoverflow.com/questions/76914913/cannot-import-getreactnativepersistence-in-firebase10-1-0
+    initializeAuth(app, {
+      persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+    });
+
+  }, []);
+
   return (
-    <SafeAreaProvider>
-      <StatusBar style="auto"/>
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name={SCREEN.Welcome} component={WelcomeScreen} options={{ headerShown: false }}/>
-          <Tab.Screen name={SCREEN.Auth} component={AuthScreen}/>
-          <Tab.Screen name={SCREEN.MainFlow} component={MainFlow} options={{ headerShown: false }}/>
-        </Tab.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <StoreProvider store={store}>
+      <SafeAreaProvider>
+        <AppContainer/>
+      </SafeAreaProvider>
+    </StoreProvider>
   );
 }

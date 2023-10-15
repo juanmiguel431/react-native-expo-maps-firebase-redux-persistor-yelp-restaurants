@@ -4,11 +4,13 @@ export const enum SCREEN {
   Welcome = 'Welcome',
   Auth = 'Auth',
   MainFlow = 'MainFlow',
-    Map = 'Map',
-    Deck = 'Deck',
-    ReviewFlow = 'ReviewFlow',
-      Review = 'Review',
-      Setting = 'Setting',
+  Map = 'Map',
+  Deck = 'Deck',
+  ReviewFlow = 'ReviewFlow',
+  Review = 'Review',
+  Setting = 'Setting',
+  Signin = 'Signin',
+  Signup = 'Signup',
 }
 
 export type Screen = ObjectValues<typeof SCREEN>;
@@ -23,8 +25,12 @@ export type RootStackParamList = {
   [SCREEN.Review]: undefined;
   [SCREEN.MainFlow]: undefined;
   [SCREEN.Setting]: undefined;
+  [SCREEN.Signin]: undefined;
+  [SCREEN.Signup]: undefined;
 };
 
+export type SigninScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Signin>;
+export type SignupScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Signup>;
 export type WelcomeScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Welcome>;
 export type AuthScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Auth>;
 export type MainFlowScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.MainFlow>;
