@@ -5,20 +5,6 @@ import { Dispatch } from 'redux';
 import { CommonActions } from '@react-navigation/native';
 import { SCREEN } from '../models/screen';
 
-export const emailChange = (email: string) => {
-  return {
-    type: Type.EmailChange,
-    payload: email
-  }
-};
-
-export const passwordChange = (password: string) => {
-  return {
-    type: Type.PasswordChange,
-    payload: password
-  }
-};
-
 export const navigateToSignup = () => {
   CommonActions.navigate(SCREEN.Signup);
   return {
