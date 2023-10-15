@@ -11,23 +11,11 @@ type LoginFormReducerState = {
 };
 
 const initialState: LoginFormReducerState = {
-  email: '',
-  password: '',
   isLoading: false,
   error: '',
   user: null,
   isSignedIn: null
 };
-
-type EmailChangeAction = {
-  type: Type.EmailChange,
-  payload: string;
-}
-
-type PasswordChangeAction = {
-  type: Type.PasswordChange,
-  payload: string;
-}
 
 type SetLoadingAction = {
   type: Type.SetLoading,
@@ -67,15 +55,11 @@ type ResolveAuthAction = {
 }
 
 type AuthReducerAction =
-  EmailChangeAction | PasswordChangeAction | SetLoadingAction | LoginUserFailAction | LoginUserAction |
+  SetLoadingAction | LoginUserFailAction | LoginUserAction |
   NavigateToSignupAction | NavigateToSigninAction | SingOutUserAction | SetErrorAction | ResolveAuthAction;
 
 export const authReducer = (state: LoginFormReducerState = initialState, action: AuthReducerAction): LoginFormReducerState => {
   switch (action.type) {
-    case Type.EmailChange:
-      return { ...state, email: action.payload };
-    case Type.PasswordChange:
-      return { ...state, password: action.payload };
     case Type.SetLoading:
       return { ...state, isLoading: action.payload };
     case Type.LoginUserFail:
