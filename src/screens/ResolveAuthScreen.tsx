@@ -14,13 +14,11 @@ const _ResolveAuthScreen: React.FC<Props> = ({ resolveAuth }) => {
 
   useEffect(() => {
     const unsubscribe = getAuth().onAuthStateChanged(async (user) => {
-      // await new Promise(r => setTimeout(r, 3000));
       await SplashScreen.hideAsync();
       resolveAuth(user);
     });
 
     return () => {
-      console.log('unsubscribe from onAuthStateChanged');
       unsubscribe();
     }
 
