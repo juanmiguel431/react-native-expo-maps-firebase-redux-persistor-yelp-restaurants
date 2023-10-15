@@ -1,5 +1,5 @@
 import React from 'react';
-import { WelcomeScreenProps } from '../models/screen';
+import { SCREEN, WelcomeScreenProps } from '../models/screen';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Slides from '../components/Slides';
 import { Slide } from '../models';
@@ -10,12 +10,14 @@ const SLIDE_DATA: Slide[] = [
   { text: 'Set your location, then swipe away', color: '#03A9F4' },
 ];
 
-export const WelcomeScreen: React.FC<WelcomeScreenProps> = () => {
+export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView>
       <Slides
         data={SLIDE_DATA}
-        onComplete={() => {}}
+        onComplete={() => {
+          navigation.navigate(SCREEN.Auth);
+        }}
       />
     </SafeAreaView>
   );

@@ -87,6 +87,12 @@ export const signOutUser = () => async (dispatch: Dispatch) => {
   }
 }
 export const resolveAuth = (user: FbUser | null) => {
+  if (user) {
+    CommonActions.navigate(SCREEN.MainFlow);
+  } else {
+    CommonActions.navigate(SCREEN.AuthFlow);
+  }
+
   return {
     type: Type.ResolveAuth,
     payload: user

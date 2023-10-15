@@ -11,6 +11,8 @@ export const enum SCREEN {
   Setting = 'Setting',
   Signin = 'Signin',
   Signup = 'Signup',
+  ResolveAuth = 'ResolveAuth',
+  AuthFlow = 'AuthFlow',
 }
 
 export type Screen = ObjectValues<typeof SCREEN>;
@@ -27,6 +29,8 @@ export type RootStackParamList = {
   [SCREEN.Setting]: undefined;
   [SCREEN.Signin]: undefined;
   [SCREEN.Signup]: undefined;
+  [SCREEN.ResolveAuth]: undefined;
+  [SCREEN.AuthFlow]: undefined;
 };
 
 export type SigninScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Signin>;
@@ -39,3 +43,5 @@ export type DeckScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.
 export type ReviewFlowScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.ReviewFlow>;
 export type ReviewScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Review>;
 export type SettingScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.Setting>;
+export type ResolveAuthScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.ResolveAuth>;
+export type AuthFlowScreenProps = NativeStackScreenProps<RootStackParamList, SCREEN.AuthFlow>;
