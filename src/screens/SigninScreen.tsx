@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SigninScreenProps, SCREEN } from '../models/screen';
 import { Button, Input, Text } from '@rneui/themed';
+import { connect } from 'react-redux';
+import { RootState } from '../reducers';
+import { loginUser } from '../actions';
 
-export const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
+type Props = SigninScreenProps & DispatchProps;
+
+const _SigninScreen: React.FC<Props> = ({ navigation, loginUser }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <View>
       <Text h1>Login</Text>
@@ -13,16 +21,20 @@ export const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
         textContentType="emailAddress"
         autoFocus
         keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
       />
       <Input
         label="Password"
         placeholder="password"
         secureTextEntry
+        value={password}
+        onChangeText={setPassword}
       />
       <Button
         title="Sign In"
         onPress={() => {
-
+          loginUser({ email, password });
         }}
       />
 
@@ -41,9 +53,16 @@ export const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  create: {
-  },
+  create: {},
   createContainer: {
     marginTop: 20
   }
 })
+
+type DispatchProps = {
+  loginUser: typeof loginUser;
+}
+
+export const SigninScreen = connect<{}, DispatchProps, SigninScreenProps, RootState>(null, {
+  loginUser
+})(_SigninScreen);
