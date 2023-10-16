@@ -50,7 +50,7 @@ const ReviewFlow = () => {
 const MainFlow = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name={SCREEN.Map} component={MapScreen}/>
+      <Tab.Screen name={SCREEN.Map} component={MapScreen} options={{ headerShown: false }}/>
       <Tab.Screen name={SCREEN.Deck} component={DeckScreen}/>
       <Tab.Screen
         name={SCREEN.ReviewFlow}
