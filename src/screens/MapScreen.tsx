@@ -7,8 +7,12 @@ import { Point } from '../models/coordinate';
 import Map from '../components/Map';
 import { Details, Region } from 'react-native-maps';
 import { Button } from '@rneui/themed';
+import { connect } from 'react-redux';
+import { getRestaurants, MAP_RADIUS } from '../actions';
 
-export const MapScreen: React.FC<MapScreenProps> = () => {
+type Props = MapScreenProps & DispatchProps;
+
+const _MapScreen: React.FC<Props> = ({ getRestaurants }) => {
   const [region, setRegion] = useState<Region>({
     longitude: -122,
     latitude: 37,
@@ -37,6 +41,8 @@ export const MapScreen: React.FC<MapScreenProps> = () => {
         mapStyle={styles.map}
         onRegionChangeComplete={onRegionChangeComplete}
         initialRegion={region}
+        currentLocation={{ latitude: region.latitude, longitude: region.longitude }}
+        currentLocationRadius={MAP_RADIUS}
       />
       <View style={styles.buttonContainer}>
         <Button
@@ -45,7 +51,9 @@ export const MapScreen: React.FC<MapScreenProps> = () => {
           icon={{ name: 'search' }}
           buttonStyle={styles.buttonStyle}
           containerStyle={styles.buttonContainerStyle}
-          onPress={() => {}}
+          onPress={() => {
+            getRestaurants({ latitude: region.latitude, longitude: region.longitude });
+          }}
         />
       </View>
     </View>
@@ -73,4 +81,12 @@ const styles = StyleSheet.create({
   view: {
     flex: 1
   }
-})
+});
+
+type DispatchProps = {
+  getRestaurants: typeof getRestaurants;
+}
+
+export const MapScreen = connect(null, {
+  getRestaurants
+})(_MapScreen);

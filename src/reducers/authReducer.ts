@@ -1,14 +1,14 @@
 import Type from '../actions/types';
 import { User } from 'firebase/auth';
 
-type LoginFormReducerState = {
+type AuthReducerState = {
   isLoading: boolean;
   error: string;
   user: User | null;
   isSignedIn: boolean | null;
 };
 
-const initialState: LoginFormReducerState = {
+const initialState: AuthReducerState = {
   isLoading: false,
   error: '',
   user: null,
@@ -56,7 +56,7 @@ type AuthReducerAction =
   SetLoadingAction | LoginUserFailAction | LoginUserAction |
   NavigateToSignupAction | NavigateToSigninAction | SingOutUserAction | SetErrorAction | ResolveAuthAction;
 
-export const authReducer = (state: LoginFormReducerState = initialState, action: AuthReducerAction): LoginFormReducerState => {
+export const authReducer = (state: AuthReducerState = initialState, action: AuthReducerAction): AuthReducerState => {
   switch (action.type) {
     case Type.SetLoading:
       return { ...state, isLoading: action.payload };

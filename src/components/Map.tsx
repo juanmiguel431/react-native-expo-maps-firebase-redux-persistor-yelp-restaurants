@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
-import MapView, { Polyline, Circle, PROVIDER_GOOGLE, Details, Region } from 'react-native-maps';
-import { Coordinate } from '../models/coordinate';
+import MapView, { Polyline, Circle, PROVIDER_GOOGLE, Details, Region, LatLng } from 'react-native-maps';
 
 type MapProps = {
   initialRegion?: Region;
-  currentLocation?: Coordinate;
-  locations?: Coordinate[];
+  currentLocation?: LatLng;
+  currentLocationRadius?: number;
+  locations?: LatLng[];
   height?: number;
   mapStyle?: StyleProp<ViewStyle>;
   onRegionChangeComplete?: (region: Region, details: Details) => void
 }
 
 export const Map: React.FC<MapProps> = (
-  { currentLocation, locations, initialRegion, height, mapStyle, onRegionChangeComplete }) => {
+  { currentLocation, currentLocationRadius,
+    locations, initialRegion, height,
+    mapStyle, onRegionChangeComplete }) => {
 
   return (
     <MapView
@@ -25,7 +27,7 @@ export const Map: React.FC<MapProps> = (
       {currentLocation &&
         <Circle
           center={currentLocation}
-          radius={10}
+          radius={currentLocationRadius || 10}
           strokeColor="rgba(158, 158, 255, 1.0)"
           fillColor="rgba(158, 158, 255, 0.3)"
         />

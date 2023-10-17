@@ -7,6 +7,9 @@ enum Type {
   SignOutUser = 'SignOutUser',
   SetError = 'SetError',
   ResolveAuth = 'ResolveAuth',
+  YelpFetchRestaurants = 'YelpFetchRestaurants',
+  YelpLoading = 'YelpLoading',
+  YelpError = 'YelpError'
 }
 
 export default Type;

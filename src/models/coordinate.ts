@@ -1,7 +1,6 @@
+import { LatLng } from 'react-native-maps/lib/sharedTypes';
 
-export type Coordinate = {
-  latitude: number;
-  longitude: number;
+export type Coordinate = LatLng & {
   altitude: number | null;
   accuracy: number | null;
   altitudeAccuracy: number | null;
