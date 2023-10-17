@@ -20,7 +20,7 @@ export type RootStackParamList = {
   [SCREEN.Welcome]: undefined;
   [SCREEN.MainFlow]: undefined;
   [SCREEN.Map]: undefined;
-  [SCREEN.Deck]: { id: string };
+  [SCREEN.Deck]: undefined;
   [SCREEN.ReviewFlow]: undefined;
   [SCREEN.Review]: undefined;
   [SCREEN.MainFlow]: undefined;

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { MapScreenProps } from '../models/screen';
+import { MapScreenProps, SCREEN } from '../models/screen';
 import useLocation from '../hooks/useLocation';
 import { useIsFocused } from '@react-navigation/native';
 import { Point } from '../models/coordinate';
@@ -9,10 +9,11 @@ import { Details, Region } from 'react-native-maps';
 import { Button } from '@rneui/themed';
 import { connect } from 'react-redux';
 import { getRestaurants, MAP_RADIUS } from '../actions';
+import { LatLng } from 'react-native-maps';
 
 type Props = MapScreenProps & DispatchProps;
 
-const _MapScreen: React.FC<Props> = ({ getRestaurants }) => {
+const _MapScreen: React.FC<Props> = ({ getRestaurants, navigation }) => {
   const [region, setRegion] = useState<Region>({
     longitude: -122,
     latitude: 37,
@@ -51,8 +52,9 @@ const _MapScreen: React.FC<Props> = ({ getRestaurants }) => {
           icon={{ name: 'search' }}
           buttonStyle={styles.buttonStyle}
           containerStyle={styles.buttonContainerStyle}
-          onPress={() => {
-            getRestaurants({ latitude: region.latitude, longitude: region.longitude });
+          onPress={async () => {
+            await getRestaurants({ latitude: region.latitude, longitude: region.longitude });
+            navigation.navigate(SCREEN.Deck);
           }}
         />
       </View>
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
 });
 
 type DispatchProps = {
-  getRestaurants: typeof getRestaurants;
+  getRestaurants: (location: LatLng) => Promise<void>;
 }
 
 export const MapScreen = connect(null, {
