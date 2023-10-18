@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
-import MapView, { Polyline, Circle, PROVIDER_GOOGLE, Details, Region, LatLng } from 'react-native-maps';
+import React, { useMemo, useState } from 'react';
+import { Platform, StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import MapView, { Polyline, Circle, PROVIDER_GOOGLE, PROVIDER_DEFAULT, Details, Region, LatLng } from 'react-native-maps';
 
 type MapProps = {
   initialRegion?: Region;
@@ -10,18 +10,45 @@ type MapProps = {
   height?: number;
   mapStyle?: StyleProp<ViewStyle>;
   onRegionChangeComplete?: (region: Region, details: Details) => void
+  scrollEnabled?: boolean;
+  cacheEnabled?: boolean;
+  provider?: 'default' | 'google';
 }
 
 export const Map: React.FC<MapProps> = (
   { currentLocation, currentLocationRadius,
     locations, initialRegion, height,
-    mapStyle, onRegionChangeComplete }) => {
+    mapStyle, onRegionChangeComplete, scrollEnabled, cacheEnabled, provider }) => {
+
+  const _cacheEnabled = useMemo(() => {
+    return Platform.OS === 'ios' ? undefined : cacheEnabled;
+  }, [cacheEnabled]);
+
+  const _provider = useMemo(() => {
+    return provider === 'default' ? PROVIDER_DEFAULT : PROVIDER_GOOGLE;
+  }, [provider]);
+
+  const _initialRegion: Region | undefined = useMemo(() => {
+    if (initialRegion) {
+      return initialRegion;
+    }
+    if (currentLocation) {
+      return {
+        latitude: currentLocation.latitude,
+        longitude: currentLocation.longitude,
+        longitudeDelta: 0.045,
+        latitudeDelta: 0.02,
+      }
+    }
+  }, [initialRegion, currentLocation]);
 
   return (
     <MapView
-      provider={PROVIDER_GOOGLE}
+      provider={_provider}
+      scrollEnabled={scrollEnabled}
+      cacheEnabled={_cacheEnabled}
       style={StyleSheet.flatten([styles.map, { height: height || 250 }, mapStyle])}
-      initialRegion={initialRegion}
+      initialRegion={_initialRegion}
       onRegionChangeComplete={onRegionChangeComplete}
     >
       {currentLocation &&

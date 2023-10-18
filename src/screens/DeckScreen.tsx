@@ -6,6 +6,7 @@ import { RootState } from '../reducers';
 import { Business } from '../models/yelp';
 import Swipe from '../components/Swipe';
 import { Button, Card } from '@rneui/themed';
+import Map from '../components/Map';
 
 type Props = DeckScreenProps & StateProps;
 
@@ -14,9 +15,19 @@ const _DeckScreen: React.FC<Props> = ({ restaurants }) => {
   const renderCard = useCallback((item: Business) => {
     return (
       <Card key={item.id}>
+        <Map
+          scrollEnabled={false}
+          cacheEnabled={true}
+          provider="default"
+          height={300}
+          initialRegion={{
+            longitude: parseFloat(item.coordinates.longitude),
+            latitude: parseFloat(item.coordinates.latitude),
+            longitudeDelta: 0.0045,
+            latitudeDelta: 0.002,
+          }}
+        />
         <Card.Title>{item.name}</Card.Title>
-        <Card.Image style={{ padding: 0 }} source={{ uri: item.image_url, }}/>
-        <Text>I can customize the card further.</Text>
         <Button
           title="View Now!"
           icon={{ name: 'code', color: 'white' }}
@@ -39,8 +50,6 @@ const _DeckScreen: React.FC<Props> = ({ restaurants }) => {
 
   return (
     <View>
-      <Text>Deck Screen</Text>
-      <Text>{restaurants.length}</Text>
       <Swipe
         data={restaurants}
         renderCard={renderCard}
