@@ -9,7 +9,8 @@ enum Type {
   ResolveAuth = 'ResolveAuth',
   YelpFetchRestaurants = 'YelpFetchRestaurants',
   YelpLoading = 'YelpLoading',
-  YelpError = 'YelpError'
+  YelpError = 'YelpError',
+  LikeRestaurant = 'LikeRestaurant',
 }
 
 export default Type;
