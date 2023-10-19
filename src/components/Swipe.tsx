@@ -77,22 +77,6 @@ const Swipe = <T,>(
     }
   }, [forceSwipe, pan]);
 
-  const panResponderRef = useRef<PanResponderInstance | null>(null);
-
-  useEffect(() => {
-    panResponderRef.current = PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-
-      onPanResponderMove: (e, gestureState) => {
-        // pan.setValue({ x: gestureState.dx, y: gestureState.dy });
-        const event = Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false });
-        event(e, gestureState);
-      },
-
-      onPanResponderRelease: onPanResponderRelease
-    })
-  }, [onPanResponderRelease, pan.x, pan.y]);
-
   const getCardStyle = useCallback(() => {
     const width = SCREEN_WIDTH * 1.5;
 
@@ -103,6 +87,26 @@ const Swipe = <T,>(
 
     return { left: pan.x, transform: [{ rotate }] }; // This will prevent the movement in Y axis.
   }, [pan]);
+
+  const [panResponder, setPanResponder] = useState<PanResponderInstance | null>(null);
+
+  useEffect(() => {
+    setPanResponder(PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+
+      onPanResponderMove: (e, gestureState) => {
+        // pan.setValue({ x: gestureState.dx, y: gestureState.dy });
+        const event = Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false });
+        event(e, gestureState);
+      },
+
+      onPanResponderRelease: onPanResponderRelease
+    }));
+  }, [onPanResponderRelease, pan.x, pan.y]);
+
+  if (!panResponder) {
+    return null;
+  }
 
   if (index >= data.length) {
     return renderNoMoreCard && renderNoMoreCard();
@@ -118,7 +122,7 @@ const Swipe = <T,>(
             <Animated.View
               key={key}
               style={[getCardStyle(), styles.cardStyle]}
-              {...panResponderRef.current?.panHandlers}
+              {...panResponder?.panHandlers}
             >
               {renderCard(item)}
             </Animated.View>
