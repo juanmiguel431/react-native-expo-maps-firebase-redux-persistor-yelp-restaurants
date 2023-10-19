@@ -12,13 +12,15 @@ type MapProps = {
   onRegionChangeComplete?: (region: Region, details: Details) => void
   scrollEnabled?: boolean;
   cacheEnabled?: boolean;
+  zoomEnabled?: boolean;
   provider?: 'default' | 'google';
 }
 
 export const Map: React.FC<MapProps> = (
   { currentLocation, currentLocationRadius,
     locations, initialRegion, height,
-    mapStyle, onRegionChangeComplete, scrollEnabled, cacheEnabled, provider }) => {
+    mapStyle, onRegionChangeComplete, scrollEnabled, cacheEnabled,
+    provider, zoomEnabled }) => {
 
   const _cacheEnabled = useMemo(() => {
     return Platform.OS === 'ios' ? undefined : cacheEnabled;
@@ -44,6 +46,8 @@ export const Map: React.FC<MapProps> = (
 
   return (
     <MapView
+      // liteMode
+      zoomEnabled={zoomEnabled}
       provider={_provider}
       scrollEnabled={scrollEnabled}
       cacheEnabled={_cacheEnabled}

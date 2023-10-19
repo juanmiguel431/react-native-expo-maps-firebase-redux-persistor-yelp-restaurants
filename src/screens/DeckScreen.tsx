@@ -18,6 +18,7 @@ const _DeckScreen: React.FC<Props> = ({ restaurants }) => {
         <Map
           scrollEnabled={false}
           cacheEnabled={true}
+          zoomEnabled={false}
           provider="default"
           height={300}
           initialRegion={{
