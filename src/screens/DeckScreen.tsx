@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { DeckScreenProps } from '../models/screen';
+import { DeckScreenProps, SCREEN } from '../models/screen';
 import { connect, MapStateToProps } from 'react-redux';
 import { RootState } from '../reducers';
 import { Business } from '../models/yelp';
@@ -10,7 +10,7 @@ import Map from '../components/Map';
 
 type Props = DeckScreenProps & StateProps;
 
-const _DeckScreen: React.FC<Props> = ({ restaurants }) => {
+const _DeckScreen: React.FC<Props> = ({ restaurants, navigation }) => {
 
   const renderCard = useCallback((item: Business) => {
     return (
@@ -34,10 +34,11 @@ const _DeckScreen: React.FC<Props> = ({ restaurants }) => {
           </View>
           <View style={styles.mapTopLayer}/>
         </View>
+        <Card.Divider/>
         <Card.Title>{item.name}</Card.Title>
         <Button
           title="View Now!"
-          icon={{ name: 'code', color: 'white' }}
+          icon={{ color: 'white' }}
           buttonStyle={{ backgroundColor: '#03A9F4' }}
         />
       </Card>
@@ -50,10 +51,13 @@ const _DeckScreen: React.FC<Props> = ({ restaurants }) => {
         <Card.Title>All done!</Card.Title>
         <Text>There is no more content here!</Text>
         <Card.Divider/>
-        <Button title="Get More!"/>
+        <Button
+          title="Select a different place"
+          onPress={() => navigation.navigate(SCREEN.Map)}
+        />
       </Card>
     );
-  }, []);
+  }, [navigation]);
 
   return (
     <View>
