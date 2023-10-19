@@ -7,10 +7,11 @@ import { Business } from '../models/yelp';
 import Swipe from '../components/Swipe';
 import { Button, Card } from '@rneui/themed';
 import Map from '../components/Map';
+import { likeRestaurant } from '../actions/likedRestaurantsActions';
 
-type Props = DeckScreenProps & StateProps;
+type Props = DeckScreenProps & StateProps & DispatchProps;
 
-const _DeckScreen: React.FC<Props> = ({ restaurants, navigation }) => {
+const _DeckScreen: React.FC<Props> = ({ restaurants, navigation, likeRestaurant }) => {
 
   const renderCard = useCallback((item: Business) => {
     return (
@@ -66,6 +67,7 @@ const _DeckScreen: React.FC<Props> = ({ restaurants, navigation }) => {
         renderCard={renderCard}
         keyExtractor={item => item.id}
         renderNoMoreCard={renderNoMoreCard}
+        onSwipeRight={likeRestaurant}
       />
     </View>
   );
@@ -99,4 +101,10 @@ const mapStateToProps: MapStateToProps<StateProps, DeckScreenProps, RootState> =
   }
 }
 
-export const DeckScreen = connect(mapStateToProps)(_DeckScreen);
+type DispatchProps = {
+  likeRestaurant: typeof likeRestaurant;
+}
+
+export const DeckScreen = connect(mapStateToProps, {
+  likeRestaurant
+})(_DeckScreen);
