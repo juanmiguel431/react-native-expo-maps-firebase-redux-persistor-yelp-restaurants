@@ -50,7 +50,7 @@ const _MapScreen: React.FC<Props> = ({ getRestaurants, navigation }) => {
         <Button
           size="lg"
           title="Search This Area"
-          icon={{ name: 'search' }}
+          icon={{ name: 'search', color: 'white' }}
           buttonStyle={styles.buttonStyle}
           containerStyle={styles.buttonContainerStyle}
           onPress={async () => {

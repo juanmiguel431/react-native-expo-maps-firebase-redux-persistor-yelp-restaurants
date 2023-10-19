@@ -54,6 +54,7 @@ const _DeckScreen: React.FC<Props> = ({ restaurants, navigation, likeRestaurant 
         <Card.Divider/>
         <Button
           title="Select a different place"
+          icon={{ name: 'my-location', color: 'white' }}
           onPress={() => navigation.navigate(SCREEN.Map)}
         />
       </Card>
