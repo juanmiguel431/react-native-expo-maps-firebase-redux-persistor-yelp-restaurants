@@ -15,7 +15,11 @@ type LikeRestaurantsAction = {
   payload: Business;
 }
 
-type ReducerAction = LikeRestaurantsAction;
+type ResetLikedRestaurantsAction = {
+  type: Type.ResetLikedRestaurant
+}
+
+type ReducerAction = LikeRestaurantsAction | ResetLikedRestaurantsAction;
 
 export const likedRestaurantReducer = (state: ReducerState = initialState, action: ReducerAction): ReducerState => {
   switch (action.type) {
@@ -23,6 +27,8 @@ export const likedRestaurantReducer = (state: ReducerState = initialState, actio
       const items = _.uniqBy([...state.items, action.payload], 'id');
       return { ...state, items: items };
     }
+    case Type.ResetLikedRestaurant:
+      return { ...state, items: [] };
     default:
       return state;
   }

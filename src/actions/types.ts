@@ -11,6 +11,7 @@ enum Type {
   YelpLoading = 'YelpLoading',
   YelpError = 'YelpError',
   LikeRestaurant = 'LikeRestaurant',
+  ResetLikedRestaurant = 'ResetLikedRestaurant',
 }
 
 export default Type;

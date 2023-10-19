@@ -7,3 +7,9 @@ export const likeRestaurant = (item: Business) => {
     payload: item
   };
 };
+
+export const resetLikedRestaurant = () => {
+  return {
+    type: Type.ResetLikedRestaurant
+  };
+};
