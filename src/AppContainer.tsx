@@ -14,7 +14,7 @@ import {
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View } from 'react-native';
-import { Button } from '@rneui/themed';
+import { Button, Icon } from '@rneui/themed';
 import { connect, MapStateToProps } from 'react-redux';
 import { RootState } from './reducers';
 import React from 'react';
@@ -50,12 +50,41 @@ const ReviewFlow = () => {
 const MainFlow = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name={SCREEN.Map} component={MapScreen} options={{ headerShown: false }}/>
-      <Tab.Screen name={SCREEN.Deck} component={DeckScreen}/>
+      <Tab.Screen
+        name={SCREEN.Map}
+        component={MapScreen}
+        options={{
+          headerShown: false,
+          title: 'Map',
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarIcon: ({ color }) => {
+            return <Icon name="my-location" color={color} />
+          }
+        }}
+      />
+      <Tab.Screen
+        name={SCREEN.Deck}
+        component={DeckScreen}
+        options={{
+          title: 'Restaurants',
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarIcon: ({ color }) => {
+            return <Icon name="description" color={color} />
+          }
+        }}
+      />
       <Tab.Screen
         name={SCREEN.ReviewFlow}
         component={ReviewFlow}
-        options={{ headerShown: false, title: 'Review' }}/>
+        options={{
+          headerShown: false,
+          title: 'Review',
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarIcon: ({ color }) => {
+            return <Icon name="favorite" color={color} />
+          }
+      }}
+      />
     </Tab.Navigator>
   );
 };
@@ -83,7 +112,7 @@ const resolveAuth = (isSignedIn: boolean | null) => {
 
 type Props = StateProps;
 
-const _AppContainer: React.FC<Props> = ( { isSignedIn }) => {
+const _AppContainer: React.FC<Props> = ({ isSignedIn }) => {
   return (
     <>
       <StatusBar style="auto"/>
