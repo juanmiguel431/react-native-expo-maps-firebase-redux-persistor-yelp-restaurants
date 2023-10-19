@@ -39,6 +39,7 @@ const _MapScreen: React.FC<Props> = ({ getRestaurants, navigation }) => {
   return (
     <View style={styles.view}>
       <Map
+        provider="google"
         mapStyle={styles.map}
         onRegionChangeComplete={onRegionChangeComplete}
         initialRegion={region}

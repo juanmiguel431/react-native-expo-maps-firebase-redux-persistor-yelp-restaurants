@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { DeckScreenProps } from '../models/screen';
 import { connect, MapStateToProps } from 'react-redux';
 import { RootState } from '../reducers';
@@ -15,19 +15,25 @@ const _DeckScreen: React.FC<Props> = ({ restaurants }) => {
   const renderCard = useCallback((item: Business) => {
     return (
       <Card key={item.id}>
-        <Map
-          scrollEnabled={false}
-          cacheEnabled={true}
-          zoomEnabled={false}
-          provider="default"
-          height={300}
-          initialRegion={{
-            longitude: parseFloat(item.coordinates.longitude),
-            latitude: parseFloat(item.coordinates.latitude),
-            longitudeDelta: 0.0045,
-            latitudeDelta: 0.002,
-          }}
-        />
+        <View style={styles.mapContainer}>
+          <View style={styles.mapBottomLayer}>
+            <Map
+              cacheEnabled={true}
+              scrollEnabled={false}
+              zoomEnabled={false}
+              rotateEnabled={false}
+              provider="google"
+              mapStyle={styles.map}
+              initialRegion={{
+                longitude: parseFloat(item.coordinates.longitude),
+                latitude: parseFloat(item.coordinates.latitude),
+                longitudeDelta: 0.0045,
+                latitudeDelta: 0.002,
+              }}
+            />
+          </View>
+          <View style={styles.mapTopLayer}/>
+        </View>
         <Card.Title>{item.name}</Card.Title>
         <Button
           title="View Now!"
@@ -60,6 +66,24 @@ const _DeckScreen: React.FC<Props> = ({ restaurants }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  map: {
+    flex: 1,
+  },
+  mapBottomLayer: {
+    flex: 1,
+  },
+  mapContainer: {
+    height: 300,
+  },
+  mapTopLayer: {
+    height: 300,
+    opacity: 0,
+    position: 'absolute',
+    width: '100%'
+  }
+});
 
 type StateProps = {
   restaurants: Business[]
