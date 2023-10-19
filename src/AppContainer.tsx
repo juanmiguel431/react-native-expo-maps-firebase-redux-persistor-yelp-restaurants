@@ -55,7 +55,7 @@ const MainFlow = () => {
       <Tab.Screen
         name={SCREEN.ReviewFlow}
         component={ReviewFlow}
-        options={{ headerShown: false, title: 'Review Jobs' }}/>
+        options={{ headerShown: false, title: 'Review' }}/>
     </Tab.Navigator>
   );
 };

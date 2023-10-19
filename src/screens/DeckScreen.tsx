@@ -65,9 +65,9 @@ type StateProps = {
   restaurants: Business[]
 }
 
-const mapStateToProps: MapStateToProps<StateProps, DeckScreenProps, RootState> = ({ yelp }) => {
+const mapStateToProps: MapStateToProps<StateProps, DeckScreenProps, RootState> = ({ restaurant }) => {
   return {
-    restaurants: yelp.items
+    restaurants: restaurant.items
   }
 }
 

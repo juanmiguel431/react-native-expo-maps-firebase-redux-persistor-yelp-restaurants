@@ -30,7 +30,7 @@ type SetErrorAction = {
 
 type YelpReducerAction = FetchRestaurantsAction | SetLoadingAction | SetErrorAction;
 
-export const yelpReducer = (state: YelpReducerState = initialState, action: YelpReducerAction): YelpReducerState => {
+export const restaurantReducer = (state: YelpReducerState = initialState, action: YelpReducerAction): YelpReducerState => {
   switch (action.type) {
     case Type.YelpFetchRestaurants:
       return { ...state, items: action.payload, error: '' };

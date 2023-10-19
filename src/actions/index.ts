@@ -1,2 +1,2 @@
 export * from './authActions';
-export * from './yelpActions';
+export * from './restaurantActions';

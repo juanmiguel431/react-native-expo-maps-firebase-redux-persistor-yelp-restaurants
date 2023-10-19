@@ -1,11 +1,11 @@
 import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux';
 import { authReducer } from './authReducer';
-import { yelpReducer } from './yelpReducer';
+import { restaurantReducer } from './restaurantReducer';
 import ReduxThunk from 'redux-thunk';
 
 export const reducers = combineReducers({
   auth: authReducer,
-  yelp: yelpReducer,
+  restaurant: restaurantReducer,
 });
 
 export type RootState = ReturnType<typeof reducers>;
