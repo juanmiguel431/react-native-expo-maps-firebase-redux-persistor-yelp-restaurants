@@ -1,9 +1,29 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import { ReviewScreenProps } from '../models/screen';
+import { connect, MapStateToProps } from 'react-redux';
+import { RootState } from '../reducers';
+import { Business } from '../models/yelp';
 
-export const ReviewScreen: React.FC<ReviewScreenProps> = () => {
+type Props = ReviewScreenProps & StateProps;
+
+export const _ReviewScreen: React.FC<Props> = ({ restaurants }) => {
   return (
-    <Text>Review Screen</Text>
+    <ScrollView>
+      <Text>Review Screen</Text>
+      <Text>{restaurants.length}</Text>
+    </ScrollView>
   );
 };
+
+type StateProps = {
+  restaurants: Business[]
+}
+
+const mapStateToProps: MapStateToProps<StateProps, ReviewScreenProps, RootState> = (state) => {
+  return {
+    restaurants: state.likedRestaurant.items
+  }
+};
+
+export const ReviewScreen = connect(mapStateToProps)(_ReviewScreen);

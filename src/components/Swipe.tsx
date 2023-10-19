@@ -1,5 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { View, Animated, PanResponder, Dimensions, LayoutAnimation, StyleSheet } from 'react-native';
+import {
+  View,
+  Animated,
+  PanResponder,
+  Dimensions,
+  LayoutAnimation,
+  StyleSheet,
+  GestureResponderEvent, PanResponderGestureState, PanResponderInstance
+} from 'react-native';
 
 type DeckProps<T> = {
   data: T[];
@@ -34,29 +42,6 @@ const Swipe = <T,>(
     setIndex(0);
   }, [data]);
 
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-
-      onPanResponderMove: (e, gestureState) => {
-        // pan.setValue({ x: gestureState.dx, y: gestureState.dy });
-        const event = Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false });
-        event(e, gestureState);
-      },
-
-      onPanResponderRelease: (e, gestureState) => {
-        if (gestureState.dx > SWIPE_THRESHOLD) {
-          forceSwipe('right');
-        } else if (gestureState.dx < -SWIPE_THRESHOLD) {
-          forceSwipe('left');
-        } else {
-          // pan.extractOffset(); // Keep the object in the place that you want.
-          Animated.spring(pan, { toValue: 0, useNativeDriver: false }).start(); // Return to the original position.
-        }
-      }
-    })
-  ).current;
-
   const onSwipeComplete = useCallback((direction: 'left' | 'right') => {
     LayoutAnimation.spring();
     setIndex((value) => value + 1);
@@ -80,6 +65,33 @@ const Swipe = <T,>(
       onSwipeComplete(direction);
     });
   }, [pan, onSwipeComplete]);
+
+  const onPanResponderRelease = useCallback((e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
+    if (gestureState.dx > SWIPE_THRESHOLD) {
+      forceSwipe('right');
+    } else if (gestureState.dx < -SWIPE_THRESHOLD) {
+      forceSwipe('left');
+    } else {
+      // pan.extractOffset(); // Keep the object in the place that you want.
+      Animated.spring(pan, { toValue: 0, useNativeDriver: false }).start(); // Return to the original position.
+    }
+  }, [forceSwipe, pan]);
+
+  const panResponderRef = useRef<PanResponderInstance | null>(null);
+
+  useEffect(() => {
+    panResponderRef.current = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+
+      onPanResponderMove: (e, gestureState) => {
+        // pan.setValue({ x: gestureState.dx, y: gestureState.dy });
+        const event = Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false });
+        event(e, gestureState);
+      },
+
+      onPanResponderRelease: onPanResponderRelease
+    })
+  }, [onPanResponderRelease, pan.x, pan.y]);
 
   const getCardStyle = useCallback(() => {
     const width = SCREEN_WIDTH * 1.5;
@@ -106,7 +118,7 @@ const Swipe = <T,>(
             <Animated.View
               key={key}
               style={[getCardStyle(), styles.cardStyle]}
-              {...panResponder.panHandlers}
+              {...panResponderRef.current?.panHandlers}
             >
               {renderCard(item)}
             </Animated.View>

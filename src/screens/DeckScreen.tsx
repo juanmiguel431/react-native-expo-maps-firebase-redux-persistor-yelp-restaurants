@@ -102,7 +102,7 @@ const mapStateToProps: MapStateToProps<StateProps, DeckScreenProps, RootState> =
 }
 
 type DispatchProps = {
-  likeRestaurant: typeof likeRestaurant;
+  likeRestaurant: (item: Business) => void;
 }
 
 export const DeckScreen = connect(mapStateToProps, {
