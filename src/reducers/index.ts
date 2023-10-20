@@ -1,5 +1,5 @@
 import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistStore, persistReducer, PURGE } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { authReducer } from './authReducer';
 import { restaurantReducer } from './restaurantReducer';

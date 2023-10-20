@@ -19,10 +19,16 @@ type ResetLikedRestaurantsAction = {
   type: Type.ResetLikedRestaurant
 }
 
-type ReducerAction = LikeRestaurantsAction | ResetLikedRestaurantsAction;
+type PurgeAction = {
+  type: Type.persistPURGE
+}
+
+type ReducerAction = LikeRestaurantsAction | ResetLikedRestaurantsAction | PurgeAction;
 
 export const likedRestaurantReducer = (state: ReducerState = initialState, action: ReducerAction): ReducerState => {
   switch (action.type) {
+    case Type.persistPURGE:
+      return { ...state, items: [] };
     case Type.LikeRestaurant: {
       const items = _.uniqBy([...state.items, action.payload], 'id');
       return { ...state, items: items };

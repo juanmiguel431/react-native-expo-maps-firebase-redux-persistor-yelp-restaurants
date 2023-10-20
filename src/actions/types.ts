@@ -12,6 +12,7 @@ enum Type {
   YelpError = 'YelpError',
   LikeRestaurant = 'LikeRestaurant',
   ResetLikedRestaurant = 'ResetLikedRestaurant',
+  persistPURGE = 'persist/PURGE',
 }
 
 export default Type;

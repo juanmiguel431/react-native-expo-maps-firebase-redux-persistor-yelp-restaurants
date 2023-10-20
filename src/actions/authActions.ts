@@ -4,6 +4,7 @@ import { AuthError, createUserWithEmailAndPassword, getAuth, signInWithEmailAndP
 import { Dispatch } from 'redux';
 import { CommonActions } from '@react-navigation/native';
 import { SCREEN } from '../models/screen';
+import { persistor } from '../reducers';
 
 export const navigateToSignup = () => {
   CommonActions.navigate(SCREEN.Signup);
@@ -24,7 +25,7 @@ export const loginUser = ({ email, password }: User) => async (dispatch: Dispatc
     dispatch({ type: Type.SetLoading, payload: true });
 
     const credentials = await signInWithEmailAndPassword(getAuth(), email, password);
-
+    await persistor.purge();
     dispatch({ type: Type.LoginUserSuccess, payload: credentials.user });
 
   } catch (e) {
@@ -42,7 +43,7 @@ export const signupUser = ({ email, password }: User) => async (dispatch: Dispat
     dispatch({ type: Type.SetLoading, payload: true });
 
     const credentials = await createUserWithEmailAndPassword(getAuth(), email, password);
-
+    await persistor.purge();
     dispatch({ type: Type.LoginUserSuccess, payload: credentials.user });
 
   } catch (e) {
@@ -60,6 +61,7 @@ export const signOutUser = () => async (dispatch: Dispatch) => {
     dispatch({ type: Type.SetLoading, payload: true });
 
     await signOut(getAuth());
+    await persistor.purge();
 
     dispatch({ type: Type.SignOutUser });
 
