@@ -6,7 +6,8 @@ import { initializeApp } from 'firebase/app';
 import { initializeAuth, getReactNativePersistence, } from 'firebase/auth';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 import AppContainer from './src/AppContainer';
-import store from './src/reducers';
+import store, { persistor } from './src/reducers';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const { UIManager } = NativeModules;
 
@@ -37,9 +38,11 @@ export default function App() {
 
   return (
     <StoreProvider store={store}>
-      <SafeAreaProvider>
-        <AppContainer/>
-      </SafeAreaProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaProvider>
+          <AppContainer/>
+        </SafeAreaProvider>
+      </PersistGate>
     </StoreProvider>
   );
 }
