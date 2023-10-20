@@ -2,14 +2,14 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootStackParamList, SCREEN } from './models/screen';
 import {
-  SigninScreen,
   DeckScreen,
   MapScreen,
+  ResolveAuthScreen,
   ReviewScreen,
   SettingScreen,
-  WelcomeScreen,
-  ResolveAuthScreen,
-  SignupScreen
+  SigninScreen,
+  SignupScreen,
+  WelcomeScreen
 } from './screens';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -22,13 +22,41 @@ import React from 'react';
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
-const ReviewFlow = () => {
+const BottomTabNavigation = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <Tab.Navigator>
+      <Tab.Screen
+        name={SCREEN.Map}
+        component={MapScreen}
+        options={{
+          headerShown: false,
+          title: 'Map',
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarIcon: ({ color }) => {
+            return <Icon name="my-location" color={color}/>
+          }
+        }}
+      />
+      <Tab.Screen
+        name={SCREEN.Deck}
+        component={DeckScreen}
+        options={{
+          title: 'Restaurants',
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarIcon: ({ color }) => {
+            return <Icon name="description" color={color}/>
+          }
+        }}
+      />
+      <Tab.Screen
         name={SCREEN.Review}
         component={ReviewScreen}
         options={({ navigation }) => ({
+          title: 'Review',
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarIcon: ({ color }) => {
+            return <Icon name="favorite" color={color}/>
+          },
           headerRight: () => (
             <View style={{ marginRight: 10 }}>
               <Button
@@ -42,50 +70,22 @@ const ReviewFlow = () => {
           )
         })}
       />
-      <Stack.Screen name={SCREEN.Setting} component={SettingScreen}/>
-    </Stack.Navigator>
+    </Tab.Navigator>
   );
 };
 
 const MainFlow = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name={SCREEN.Map}
-        component={MapScreen}
+    <Stack.Navigator>
+      <Stack.Screen
+        name={SCREEN.MainBottomTabNavigation}
+        component={BottomTabNavigation}
         options={{
-          headerShown: false,
-          title: 'Map',
-          tabBarLabelStyle: { fontSize: 12 },
-          tabBarIcon: ({ color }) => {
-            return <Icon name="my-location" color={color} />
-          }
+          headerShown: false
         }}
       />
-      <Tab.Screen
-        name={SCREEN.Deck}
-        component={DeckScreen}
-        options={{
-          title: 'Restaurants',
-          tabBarLabelStyle: { fontSize: 12 },
-          tabBarIcon: ({ color }) => {
-            return <Icon name="description" color={color} />
-          }
-        }}
-      />
-      <Tab.Screen
-        name={SCREEN.ReviewFlow}
-        component={ReviewFlow}
-        options={{
-          headerShown: false,
-          title: 'Review',
-          tabBarLabelStyle: { fontSize: 12 },
-          tabBarIcon: ({ color }) => {
-            return <Icon name="favorite" color={color} />
-          }
-      }}
-      />
-    </Tab.Navigator>
+      <Stack.Screen name={SCREEN.Setting} component={SettingScreen}/>
+    </Stack.Navigator>
   );
 };
 
