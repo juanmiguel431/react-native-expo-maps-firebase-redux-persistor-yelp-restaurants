@@ -18,6 +18,7 @@
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyByoTHo1Mqx1gOILngmBW7DdcgWdxdzyiI"
@@ -26,7 +27,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.juanmiguel431.restaurantsyelp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
