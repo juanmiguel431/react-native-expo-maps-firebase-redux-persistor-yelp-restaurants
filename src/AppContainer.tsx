@@ -17,7 +17,11 @@ import { View } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
 import { connect, MapStateToProps } from 'react-redux';
 import { RootState } from './reducers';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { setNotification, setNotificationToken } from './actions/notificationActions';
+import { ExpoPushToken } from 'expo-notifications';
+import * as Notifications from 'expo-notifications';
+import registerForPushNotificationsAsync from './services/sendPushNotification';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -110,9 +114,34 @@ const resolveAuth = (isSignedIn: boolean | null) => {
   }
 }
 
-type Props = StateProps;
+type Props = StateProps & DispatchProps;
 
-const _AppContainer: React.FC<Props> = ({ isSignedIn }) => {
+const _AppContainer: React.FC<Props> = ({ isSignedIn, setNotificationToken, setNotification }) => {
+  const notificationListener = useRef<Notifications.Subscription | null>(null);
+  const responseListener = useRef<Notifications.Subscription | null>(null);
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setNotificationToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      if (notificationListener.current){
+        Notifications.removeNotificationSubscription(notificationListener.current);
+      }
+
+      if (responseListener.current) {
+        Notifications.removeNotificationSubscription(responseListener.current);
+      }
+    };
+  }, [setNotification, setNotificationToken]);
+
   return (
     <>
       <StatusBar style="auto"/>
@@ -133,6 +162,13 @@ const mapStateToProps: MapStateToProps<StateProps, {}, RootState> = ({ auth }) =
   return { isSignedIn: auth.isSignedIn };
 }
 
-const AppContainer = connect(mapStateToProps)(_AppContainer);
+type DispatchProps = {
+  setNotificationToken: (token: ExpoPushToken | undefined) => void;
+  setNotification: (notification: Notifications.Notification | null) => void;
+}
+
+const AppContainer = connect(mapStateToProps, {
+  setNotificationToken, setNotification
+})(_AppContainer);
 
 export default AppContainer;

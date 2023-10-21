@@ -1,11 +1,12 @@
 import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux';
 import { persistStore, persistReducer, PURGE } from 'redux-persist';
+import { PersistConfig } from 'redux-persist/es/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ReduxThunk from 'redux-thunk';
 import { authReducer } from './authReducer';
 import { restaurantReducer } from './restaurantReducer';
-import ReduxThunk from 'redux-thunk';
 import { likedRestaurantReducer } from './likedRestaurantReducer';
-import { PersistConfig } from 'redux-persist/es/types';
+import { notificationReducer } from './notificationReducer';
 
 const persistConfig: PersistConfig<any> = {
   key: 'root',
@@ -17,6 +18,7 @@ export const reducers = combineReducers({
   auth: authReducer,
   restaurant: restaurantReducer,
   likedRestaurant: likedRestaurantReducer,
+  notification: notificationReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducers);

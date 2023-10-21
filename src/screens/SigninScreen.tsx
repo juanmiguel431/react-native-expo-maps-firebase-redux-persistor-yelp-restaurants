@@ -79,6 +79,6 @@ const mapStateToProps: MapStateToProps<StateProps, SigninScreenProps, RootState>
   }
 }
 
-export const SigninScreen = connect<{}, DispatchProps, SigninScreenProps, RootState>(mapStateToProps, {
+export const SigninScreen = connect<StateProps, DispatchProps, SigninScreenProps, RootState>(mapStateToProps, {
   loginUser
 })(_SigninScreen);

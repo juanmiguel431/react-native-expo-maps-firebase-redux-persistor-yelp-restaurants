@@ -1,6 +1,6 @@
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as StoreProvider } from 'react-redux';
-import { NativeModules, Platform, View } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import { useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { initializeAuth, getReactNativePersistence, } from 'firebase/auth';

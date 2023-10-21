@@ -13,6 +13,9 @@ enum Type {
   LikeRestaurant = 'LikeRestaurant',
   ResetLikedRestaurant = 'ResetLikedRestaurant',
   persistPURGE = 'persist/PURGE',
+  SetPushNotificationToken = 'SetPushNotificationToken',
+  SetPushNotification = 'SetPushNotification',
+  SendPushNotification = 'SendPushNotification'
 }
 
 export default Type;
