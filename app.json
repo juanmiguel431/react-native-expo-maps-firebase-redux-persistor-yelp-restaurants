@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "jobs",
-    "slug": "jobs",
+    "name": "restaurants-yelp",
+    "slug": "restaurants-yelp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -30,6 +30,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a9ace884-663b-4eb4-b884-0bf584a68ea3"
+      }
+    },
+    "owner": "juanmiguel431"
   }
 }
