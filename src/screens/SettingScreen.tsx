@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { SettingScreenProps } from '../models/screen';
 import { connect, MapStateToProps } from 'react-redux';
 import { RootState } from '../reducers';
@@ -36,15 +36,14 @@ const _SettingScreen: React.FC<Props> = (
       />
       <Text h4>Test Notifications</Text>
 
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
-        {/*<Text>Your expo push token: {token}</Text>*/}
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+      <View style={styles.notificationContainer}>
+        <Text>Your expo push token: {token?.data}</Text>
+        <View style={styles.notificationMessage}>
           <Text>Title: {notification && notification.request.content.title} </Text>
           <Text>Body: {notification && notification.request.content.body}</Text>
           <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
         </View>
       </View>
-
 
       <Button
         title="Press to Send Notification"
@@ -55,6 +54,18 @@ const _SettingScreen: React.FC<Props> = (
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  notificationContainer: {
+    // alignItems: 'center',
+    // flex: 1,
+    // justifyContent: 'space-around'
+  },
+  notificationMessage: {
+    // alignItems: 'center',
+    // justifyContent: 'center'
+  }
+});
 
 type StateProps = {
   user: User | null;

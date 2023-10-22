@@ -21,7 +21,7 @@ export const setNotification = (notification: Notifications.Notification | null)
 export const sendPushNotification = (expoPushToken: ExpoPushToken) => async (dispatch: Dispatch) => {
   try {
     const message = {
-      to: expoPushToken,
+      to: expoPushToken.data,
       sound: 'default',
       title: 'Original Title',
       body: 'And here is the body!',
@@ -41,7 +41,9 @@ export const sendPushNotification = (expoPushToken: ExpoPushToken) => async (dis
     dispatch({ type: Type.SendPushNotification });
 
   } catch (e) {
-
+    if (e instanceof Error) {
+      console.log(e);
+    }
   } finally {
 
   }
