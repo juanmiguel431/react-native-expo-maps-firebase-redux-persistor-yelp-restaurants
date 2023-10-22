@@ -11,7 +11,7 @@ import {
 
 type DeckProps<T> = {
   data: T[];
-  renderCard: (item: T) => React.ReactNode;
+  renderCard: (item: T, index: number, currentIndex: number) => React.ReactNode;
   onSwipeRight?: (item: T) => void;
   onSwipeLeft?: (item: T) => void;
   onSwipe?: (item: T) => void;
@@ -124,7 +124,7 @@ const Swipe = <T,>(
               style={[getCardStyle(), styles.cardStyle]}
               {...panResponder?.panHandlers}
             >
-              {renderCard(item)}
+              {renderCard(item, i, index)}
             </Animated.View>
           );
         }
@@ -139,7 +139,7 @@ const Swipe = <T,>(
                 top: 10 * (i - index)
               }
             ]}>
-            {renderCard(item)}
+            {renderCard(item, i, index)}
           </Animated.View>
         );
       })}

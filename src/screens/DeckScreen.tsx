@@ -12,26 +12,29 @@ import { likeRestaurant } from '../actions/likedRestaurantsActions';
 type Props = DeckScreenProps & StateProps & DispatchProps;
 
 const _DeckScreen: React.FC<Props> = ({ restaurants, navigation, likeRestaurant }) => {
+  const renderCard = useCallback((item: Business, index: number, currentIndex: number) => {
+    const show = (index - currentIndex) < 4;
 
-  const renderCard = useCallback((item: Business) => {
     return (
       <Card key={item.id}>
         <View style={styles.mapContainer}>
           <View style={styles.mapBottomLayer}>
-            <Map
-              cacheEnabled={true}
-              scrollEnabled={false}
-              zoomEnabled={false}
-              rotateEnabled={false}
-              provider="google"
-              mapStyle={styles.map}
-              initialRegion={{
-                longitude: parseFloat(item.coordinates.longitude),
-                latitude: parseFloat(item.coordinates.latitude),
-                longitudeDelta: 0.0045,
-                latitudeDelta: 0.002,
-              }}
-            />
+            {show &&
+              <Map
+                cacheEnabled={true}
+                scrollEnabled={false}
+                zoomEnabled={false}
+                rotateEnabled={false}
+                provider="google"
+                mapStyle={styles.map}
+                initialRegion={{
+                  longitude: parseFloat(item.coordinates.longitude),
+                  latitude: parseFloat(item.coordinates.latitude),
+                  longitudeDelta: 0.0045,
+                  latitudeDelta: 0.002,
+                }}
+              />
+            }
           </View>
           <View style={styles.mapTopLayer}/>
         </View>
